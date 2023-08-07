@@ -2,8 +2,6 @@ import logging
 from time import time
 from typing import Dict, Optional
 
-from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.contrib import auth
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
@@ -89,6 +87,3 @@ def IAPUserMiddleware(get_response):
                 )
         return get_response(request)
     return middleware
-
-
-admin.register(Group)
