@@ -25,6 +25,10 @@ IAP_CERT_URL = getattr(
 
 
 def _create_user(email):
+    """Create a new user with the provided email as username and email.
+    If an organization already exists, assign the new user to it, otherwise create
+    a new org created by the user.
+    """
     user = User.objects.create_user(email=email, username=email)
     user.set_unusable_password()
 
@@ -40,6 +44,10 @@ def _create_user(email):
 
 
 def _decode_token(request) -> Optional[Dict]:
+    """Decode the jwt assertion from the request header.
+    If the token header is missing, or the token is invalid, returns None
+    otherwise returns the decoded assertion as a Dict
+    """
     logger.debug("decoding user from jwt")
     encoded_token = request.headers.get(IAP_HEADER)
     if encoded_token is None:
@@ -58,6 +66,11 @@ def _decode_token(request) -> Optional[Dict]:
 
 
 def _get_user(request):
+    """Looks up a user object based on the email address present in the jwt assertion
+    on the request header. If the token is missing or invalid, None is returned.
+    If the email address does not belong to an existing user, a new one is created and
+    returned.
+    """
     token = _decode_token(request)
     if token is None:
         return None
@@ -74,6 +87,9 @@ def _get_user(request):
 
 
 def IAPUserMiddleware(get_response):
+    """Middleware function that looks up or creates a user based on the IAP JWT assertion
+    and then logs that user in.
+    """
     def middleware(request):
         if not (request.user and request.user.is_authenticated):
             # if a user either doesn't exist on the request or isn't authenticated
