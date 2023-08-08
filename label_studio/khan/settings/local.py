@@ -7,6 +7,9 @@ DISABLE_SIGNUP_WITHOUT_LINK = False
 # Unless set in the env, use DEBUG level logging for local runs
 LOGGING['root']['level'] = get_env('LOG_LEVEL', 'DEBUG')
 
+# Use sqlite for local
+DATABASES = {'default': DATABASES_ALL[DJANGO_DB_SQLITE]}
+
 # Unless set in the env, run in DEBUG mode
 DEBUG = get_bool_env('DEBUG', True)
 DEBUG_PROPAGATE_EXCEPTIONS = get_bool_env('DEBUG_PROPAGATE_EXCEPTIONS', True)

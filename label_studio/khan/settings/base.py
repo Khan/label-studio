@@ -18,7 +18,7 @@ REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'].append(
 # Default Logging to INFO level
 LOGGING['root']['level'] = get_env('LOG_LEVEL', 'INFO')
 
-# Use PSQL
+# Default to PSQL
 DATABASES = {'default': DATABASES_ALL[DJANGO_DB_POSTGRESQL]}
 
 # IAP _should_ mean users never even see the login page, but on the off chance they do,
