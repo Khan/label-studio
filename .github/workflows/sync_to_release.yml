@@ -20,9 +20,6 @@ jobs:
           ref: workflow-testing
       - name: Merge develop into release
         run: |
-          branch='${{ steps.get-branch.outputs.name }}'
-          base_branch='origin/${{ steps.get-branch.outputs.base_name }}'
-          
           git config --global user.name 'khan-actions-bot'
           git config --global user.email 'infrastructure-data@khanacademy.org'
           
