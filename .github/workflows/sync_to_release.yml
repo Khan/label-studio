@@ -11,6 +11,13 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out develop branch
+        uses: actions/checkout@v3
+        with:
+          # uses the `khan-actions-bot` Khan Org level user which was granted
+          # permissions to override branch protections.
+          token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
+          ref: develop
       - name: Check out release branch
         uses: actions/checkout@v3
         with:
