@@ -30,6 +30,6 @@ jobs:
           git config --global user.name 'khan-actions-bot'
           git config --global user.email 'infrastructure-data@khanacademy.org'
           
-          git merge origin/develop --no-edit -m 'Merge develop into workflow-testing branch ${{github.job}} in run id ${{github.run_id}}'
+          git merge origin/develop --no-edit --allow-unrelated-histories -m 'Merge develop into workflow-testing branch ${{github.job}} in run id ${{github.run_id}}'
       - name: Notify Slack on failure
         uses: ./.github/actions/notify_slack
