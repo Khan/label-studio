@@ -24,12 +24,13 @@ jobs:
           # uses the `khan-actions-bot` Khan Org level user which was granted
           # permissions to override branch protections.
           token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
-          ref: workflow-testing
+          ref: release
       - name: Merge develop into release
         run: |
           git config --global user.name 'khan-actions-bot'
           git config --global user.email 'infrastructure-data@khanacademy.org'
           
-          git merge origin/develop --no-edit --allow-unrelated-histories -m 'Merge develop into workflow-testing branch ${{github.job}} in run id ${{github.run_id}}'
+          git merge origin/develop --no-edit -m 'Merge develop into release branch ${{github.job}} in run id ${{github.run_id}}'
+#          git push
       - name: Notify Slack on failure
         uses: ./.github/actions/notify_slack
