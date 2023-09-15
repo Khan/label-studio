@@ -18,7 +18,6 @@ jobs:
           # permissions to override branch protections.
           token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
           ref: release
-#          fetch-depth: 0
       - name: Merge develop into release
         run: |
           git config --global user.name 'khan-actions-bot'
