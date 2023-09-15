@@ -17,14 +17,14 @@ jobs:
           # uses the `khan-actions-bot` Khan Org level user which was granted
           # permissions to override branch protections.
           token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
-          ref: develop
+          ref: origin/develop
       - name: Check out release branch
         uses: actions/checkout@v3
         with:
           # uses the `khan-actions-bot` Khan Org level user which was granted
           # permissions to override branch protections.
           token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
-          ref: release
+          ref: origin/release
       - name: Merge develop into release
         run: |
           git config --global user.name 'khan-actions-bot'
