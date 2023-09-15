@@ -1,0 +1,31 @@
+name: 'Scheduled sync to release branch'
+
+on:
+  # Allow manual syncing/testing.
+  workflow_dispatch:
+  # Every Monday at 0600 UTC.
+  schedule:
+    - cron: '0 6 * * 1'
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out release branch
+        uses: actions/checkout@v3
+        with:
+          # uses the `khan-actions-bot` Khan Org level user which was granted
+          # permissions to override branch protections.
+          token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
+          ref: release
+      - name: Merge develop into release
+        run: |
+          branch='${{ steps.get-branch.outputs.name }}'
+          base_branch='origin/${{ steps.get-branch.outputs.base_name }}'
+          
+          git config --global user.name 'khan-actions-bot'
+          git config --global user.email 'infrastructure-data@khanacademy.org'
+          
+          git merge origin/develop --no-edit -m 'Merge develop into release branch ${{github.job}} in run id ${{github.run_id}}'
+      - name: Notify Slack on failure
+        uses: ./.github/actions/notify_slack
