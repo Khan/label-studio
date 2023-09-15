@@ -11,26 +11,21 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out develop branch
-        uses: actions/checkout@v3
-        with:
-          # uses the `khan-actions-bot` Khan Org level user which was granted
-          # permissions to override branch protections.
-          token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
-          ref: origin/develop
       - name: Check out release branch
         uses: actions/checkout@v3
         with:
           # uses the `khan-actions-bot` Khan Org level user which was granted
           # permissions to override branch protections.
           token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
-          ref: origin/release
+          ref: release
+#          fetch-depth: 0
       - name: Merge develop into release
         run: |
           git config --global user.name 'khan-actions-bot'
           git config --global user.email 'infrastructure-data@khanacademy.org'
+          git fetch --all --unshallow
           
-          git merge origin/develop --no-edit -m 'Merge develop into release branch ${{github.job}} in run id ${{github.run_id}}'
+          git merge origin/develop --no-edit -m 'Merge develop into release branch in run id ${{github.run_id}}'
 #          git push
       - name: Notify Slack on failure
         uses: ./.github/actions/notify_slack
