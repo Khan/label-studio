@@ -47,8 +47,6 @@ jobs:
           path: tmp
           token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
           fetch-depth: 1
-          # TODO: testing
-#          ref: ${{ github.event.client_payload.commit_sha }}
           ref: master
 
       - uses: actions/setup-node@v3
@@ -84,14 +82,9 @@ jobs:
           NODE_ENV: 'production'
         run: |
           yarn run build:module
-#          TODO: testing
-#          branch="${{ github.event.client_payload.base_branch_name }}"
           branch="master"
           cat << EOF > "build/static/version.json"
           {
-#            "message": "${{ github.event.client_payload.title }}",
-#            "commit": "${{ github.event.client_payload.commit_sha }}",
-#            TODO: testing
             "message": "Placeholder message",
             "commit": "0119e31",
             "branch": "${branch}",
