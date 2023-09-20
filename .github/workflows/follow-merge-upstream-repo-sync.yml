@@ -8,8 +8,6 @@ on:
   # TODO: testing
   workflow_dispatch:
 
-# Ensure only one job is running at a time to sync from frontend. For example, multiple could be triggered if
-# PRs are merged to the frontend repo in quick succession.
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.client_payload.branch_name }}
 
@@ -28,7 +26,6 @@ jobs:
       github.event.client_payload.event_action == 'merged'
     runs-on: ubuntu-latest
     steps:
-#      - uses: hmarr/debug-action@v2.1.0
       - name: Configure git
         shell: bash
         run: |
