@@ -1,7 +1,8 @@
-name: 'Follow Merge: LSF Sync'
+name: 'Scheduled Label Studio Frontend sync'
 
 on:
   schedule:
+    # Every Monday at 0400 UTC (before sync to release branch).
     - cron: '0 4 * * 1'
   workflow_call:
   workflow_dispatch:
@@ -12,10 +13,13 @@ jobs:
     steps:
       - uses: hmarr/debug-action@v2.1.0
 
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Create dispatch event
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GIT_PAT }}
+          github-token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
           script: |
             const { repo, owner } = context.repo;
             
@@ -38,11 +42,11 @@ jobs:
               repo,
               event_type: 'upstream_repo_update',
               client_payload: {
-                branch_name: 'fb-scheduled-lsf-sync',
+                branch_name: 'develop',
                 base_branch_name: lsf_repo_data.default_branch,
                 repo_name: lsf_repo_data.full_name,
                 commit_sha: lsf_commit.sha,
-                title: "feat: Scheduled LSF sync",
+                title: "Scheduled Label Studio Frontend sync",
                 html_url: lsf_commit.html_url,
                 actor: lsf_commit.commit.author.name,
                 author_username: lsf_commit.commit.author.name,
@@ -51,3 +55,8 @@ jobs:
               }
             });
             return result
+      - name: Notify Slack on failure
+        if: failure()
+        uses: ./.github/actions/notify_slack
+        with:
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
