@@ -28,8 +28,7 @@ jobs:
       github.event.client_payload.event_action == 'merged'
     runs-on: ubuntu-latest
     steps:
-      - uses: hmarr/debug-action@v2.1.0
-
+#      - uses: hmarr/debug-action@v2.1.0
       - name: Configure git
         shell: bash
         run: |
