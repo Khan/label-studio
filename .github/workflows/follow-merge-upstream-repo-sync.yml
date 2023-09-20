@@ -32,7 +32,6 @@ jobs:
           set -xeuo pipefail
 #          git config --global user.name '${{ github.event.client_payload.author_username }}'
 #          git config --global user.email '${{ github.event.client_payload.author_email }}'
-          # TODO: testing
           git config --global user.name 'khan-actions-bot'
           git config --global user.email 'infrastructure-data@khanacademy.org'
 
