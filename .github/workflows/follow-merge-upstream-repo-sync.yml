@@ -1,4 +1,4 @@
-name: 'Follow Merge: Upstream repo sync'
+name: 'Sync from Label Studio frontend'
 
 on:
   # Triggered by either the scheduled weekly sync, or a PR merged to the main branch of Khan/label-studio-frontend.
@@ -24,6 +24,8 @@ env:
 jobs:
   open:
     name: Sync PR
+    if: |
+      github.event.client_payload.event_action == 'merged'
     runs-on: ubuntu-latest
     steps:
       - uses: hmarr/debug-action@v2.1.0
@@ -48,7 +50,7 @@ jobs:
           path: tmp
           token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
           fetch-depth: 1
-          ref: ${{ env.FRONTEND_BASE_BRANCH }}
+          ref: ${{ github.event.client_payload.commit_sha }}
 
       - uses: actions/setup-node@v3
         with:
@@ -87,7 +89,7 @@ jobs:
           cat << EOF > "build/static/version.json"
           {
             "message": "${{ github.event.client_payload.title }}",
-            "commit": "{{ github.event.client_payload.commit_sha }}",
+            "commit": "${{ github.event.client_payload.commit_sha }}",
             "branch": "${branch}",
             "date": "$(git log -1 --date=format:"%Y/%m/%d %T" --format="%ad" | cat)"
           }
