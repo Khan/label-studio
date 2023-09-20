@@ -1,4 +1,4 @@
-name: 'Sync from Label Studio Frontend'
+name: 'Follow Merge: Upstream repo sync'
 
 on:
   # Triggered by either the scheduled weekly sync, or a PR merged to the main branch of Khan/label-studio-frontend.
