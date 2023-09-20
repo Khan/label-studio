@@ -1,4 +1,4 @@
-name: 'Follow Merge: LSF Sync'
+name: 'Scheduled Label Studio Frontend sync'
 
 on:
   schedule:
@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: hmarr/debug-action@v2.1.0
+
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Create dispatch event
         uses: actions/github-script@v6
