@@ -31,13 +31,14 @@ jobs:
         shell: bash
         run: |
           set -xeuo pipefail
-          git config --global user.name 'robot-ci-heartex'
-          git config --global user.email 'robot-ci-heartex@users.noreply.github.com'
+          git config --global user.name 'khan-actions-bot'
+          git config --global user.email 'infrastructure-data@khanacademy.org'
 
       - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: ${{ inputs.ref }}
+          token: ${{ secrets.KHAN_ACTIONS_BOT_TOKEN }}
 
       - uses: actions/setup-node@v3
         with:
