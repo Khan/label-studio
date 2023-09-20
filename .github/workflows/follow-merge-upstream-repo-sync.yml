@@ -5,9 +5,9 @@ on:
   repository_dispatch:
     types:
       - upstream_repo_update
-  # TODO: testing
-  workflow_dispatch:
 
+# Ensure only one job is running at a time to sync from frontend. For example, multiple could be triggered if
+# PRs are merged to the frontend repo in quick succession.
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.client_payload.branch_name }}
 
