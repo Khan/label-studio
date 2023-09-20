@@ -57,3 +57,5 @@ jobs:
             return result
       - name: Notify Slack on failure
         uses: ./.github/actions/notify_slack
+        with:
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
