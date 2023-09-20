@@ -28,3 +28,5 @@ jobs:
 #          git push
       - name: Notify Slack on failure
         uses: ./.github/actions/notify_slack
+      - name: Notify Slack on failure
+        uses: ./.github/actions/notify_slack
