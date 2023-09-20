@@ -10,7 +10,6 @@ runs:
   using: "composite"
   steps:
     - name: Notify slack on failure
-      if: failure()
       uses: slackapi/slack-github-action@v1.23.0
       with:
         payload: |
