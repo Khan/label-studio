@@ -5,6 +5,8 @@ on:
   repository_dispatch:
     types:
       - upstream_repo_update
+  # TODO: testing
+  workflow_dispatch:
 
 # Ensure only one job is running at a time to sync from frontend. For example, multiple could be triggered if
 # PRs are merged to the frontend repo in quick succession.
@@ -20,10 +22,6 @@ env:
 jobs:
   open:
     name: Sync PR
-    if: |
-      github.event.client_payload.event_action == 'opened' ||
-      github.event.client_payload.event_action == 'synchronize' ||
-      github.event.client_payload.event_action == 'merged'
     runs-on: ubuntu-latest
     steps:
       - name: Configure git
