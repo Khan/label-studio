@@ -1,6 +1,6 @@
 {
-  "message": "Scheduled Label Studio Frontend sync",
-  "commit": "06fbda811337c7be172e6a32e1486a3f275bac48",
+  "message": "Added MathJax rendering",
+  "commit": "ab883044c95489edb175be2bcd6a5529a38f8377",
   "branch": "master",
-  "date": "2023/09/21 12:39:41"
+  "date": "2024/07/23 14:05:33"
 }
