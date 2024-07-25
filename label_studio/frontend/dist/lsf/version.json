@@ -1,6 +1,6 @@
 {
-  "message": "Added MathJax rendering",
-  "commit": "ab883044c95489edb175be2bcd6a5529a38f8377",
+  "message": "MathJax: Add condition for Math expression parsing",
+  "commit": "7c5cf6b14b8719ff0289a0945cfad897a232b8f0",
   "branch": "master",
-  "date": "2024/07/23 14:05:33"
+  "date": "2024/07/24 17:36:26"
 }
