@@ -1,6 +1,6 @@
 {
-  "message": "MathJax: Add condition for Math expression parsing",
-  "commit": "7c5cf6b14b8719ff0289a0945cfad897a232b8f0",
+  "message": "Adding next button to the labeling interface",
+  "commit": "6ae817e81b6c3591a9be48a61ceea3cf22e3e6ca",
   "branch": "master",
-  "date": "2024/07/24 17:36:26"
+  "date": "2024/07/25 16:13:27"
 }
