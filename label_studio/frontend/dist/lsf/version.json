@@ -1,6 +1,6 @@
 {
-  "message": "Adding next button to the labeling interface",
-  "commit": "6ae817e81b6c3591a9be48a61ceea3cf22e3e6ca",
+  "message": "Fixing up logic around selecting/deselecting nested labels",
+  "commit": "e633083bb0e1d58c941cb5ed55b11612efa095fd",
   "branch": "master",
-  "date": "2024/07/25 16:13:27"
+  "date": "2024/07/26 17:32:44"
 }
