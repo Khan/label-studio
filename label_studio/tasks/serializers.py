@@ -75,6 +75,42 @@ class AnnotationSerializer(FlexFieldsModelSerializer):
 
     def validate_result(self, value):
         data = value
+
+        # This is to work around a mysterious bug related to DRF handling:
+        # https://github.com/encode/django-rest-framework/issues/7026
+        #
+        # This manifest itself as 500 error when writing to database:
+        #
+        #   psycopg2.errors.InvalidTextRepresentation: invalid input syntax for
+        #   type json
+        #   DETAIL: Unicode low surrogate must follow a high surrogate
+        #
+        # This only happens to specific browser, presumably some bad unicode
+        # was leaked to the server.
+        #
+        # We work around this by doing a round trip to JSON, with
+        # ensure_ascii=False will ensure that any UNICODE characters are
+        # preserved, and therefore escaped on the round trip back.
+        #
+        # Note: we don't care about any unicode in annotation, as we don't use
+        # the text for referencing our annotation.
+        try:
+            json_str = value
+            if not isinstance(value, str):
+                json_str = json.dumps(value, ensure_ascii=False)
+
+            # Strip unicode characters
+            non_unicode_json_str = json_str.encode('ascii', 'ignore').decode('ascii')
+
+            # If the string is different, then we have some unicode characters
+            # then we will do the roundtrip de-unicoding.
+            if json_str != non_unicode_json_str:
+                logging.warning('Annotation result contains unicode characters, stripping them')
+                value = non_unicode_json_str
+        except Exception as e:
+            # Be defensive here, just proceed as normal if we can't strip unicode
+            logging.error(f'Error while trying to strip unicode characters from annotation result: {e}')
+
         # convert from str to json if need
         if isinstance(value, str):
             try:
@@ -282,7 +318,7 @@ class BaseTaskSerializerBulk(serializers.ListSerializer):
             if email not in members_email_to_id:
                 obj['created_by_id'] = default_user.id
                 logger.warning('Email not found in members_email_to_id, default user used instead')
-                
+
             # resolve annotators by email
             else:
                 obj['created_by_id'] = members_email_to_id[email]
@@ -427,7 +463,7 @@ class BaseTaskSerializerBulk(serializers.ListSerializer):
         """ Save task reviews to DB
         """
         return []
-    
+
     def add_drafts(self, task_drafts, db_tasks, annotation_mapping, project):
         """ Save task drafts to DB
         """
