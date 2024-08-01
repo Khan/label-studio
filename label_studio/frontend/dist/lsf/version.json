@@ -1,6 +1,6 @@
 {
-  "message": "Fix MathJax rendering",
-  "commit": "984a8f3de2c341cde25b73bf97af2e8de06f7dfa",
+  "message": "Fix selection over on MathJax interaction",
+  "commit": "37a79e1b75f9126f01cbcf1a6f27c22105422384",
   "branch": "master",
-  "date": "2024/07/31 13:59:46"
+  "date": "2024/08/01 14:52:17"
 }
